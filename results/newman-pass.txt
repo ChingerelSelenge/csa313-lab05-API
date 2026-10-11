@@ -1,0 +1,155 @@
+newman
+
+Lab05 Registration API Tests
+
+❏ TC02 Оюутан байхгүй
+↳ Хичээл бэлтгэх
+  PUT http://localhost:3000/courses/TC02_COURSE [200 OK, 178B, 40ms]
+
+↳ Бүртгэл үүсгэх
+  POST http://localhost:3000/registrations [200 OK, 192B, 4ms]
+  ✓  Статус 200 байна
+  ✓  result нь ERROR_NO_STUDENT байна
+
+❏ TC01 Амжилттай бүртгэл
+↳ 01 Setup — Идэвхтэй оюутан
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 4ms]
+
+↳ 02 Setup — CS201 урьдачтай хичээл
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 4ms]
+
+↳ 03 Test — Амжилттай бүртгэл 201 OK
+  POST http://localhost:3000/registrations [201 Created, 202B, 3ms]
+  ✓  Статус 201 байна
+  ✓  result нь OK байна
+  ✓  registrationID нь тоо байна
+
+❏ TC03 — Идэвхгүй оюутан
+↳ 01 Setup
+  PUT http://localhost:3000/students/TC03_STUDENT [200 OK, 178B, 3ms]
+
+↳ 02 Setup
+  PUT http://localhost:3000/courses/TC03_COURSE [200 OK, 178B, 2ms]
+
+↳ Test
+  POST http://localhost:3000/registrations [200 OK, 198B, 3ms]
+  ✓  Статус 200 байна
+  ✓  Идэвхгүй оюутны алдаа буцна
+
+❏ TC04 — Хичээл байхгүй
+↳ Setup
+  PUT http://localhost:3000/students/TC04_STUDENT [200 OK, 178B, 3ms]
+
+↳ Test
+  POST http://localhost:3000/registrations [200 OK, 191B, 3ms]
+  ✓  Статус 200 байна
+  ✓  Хичээл байхгүй алдаа буцна
+
+❏ TC05 — Урьдач нөхцөл огт хангахгүй
+↳ 01 Setup
+  PUT http://localhost:3000/students/TC05_STUDENT [200 OK, 178B, 5ms]
+
+↳ 02 Setup
+  PUT http://localhost:3000/courses/TC05_COURSE [200 OK, 178B, 3ms]
+
+↳ Test
+  POST http://localhost:3000/registrations [200 OK, 215B, 3ms]
+  ✓  Статус 200 байна
+  ✓  Урьдач нөхцөлийн алдаа буцна
+  ✓  Дутуу урьдач нь CS201 байна
+
+❏ TC06 — Оюутан болон хичээл хоёул байхгүй
+↳ Test
+  POST http://localhost:3000/registrations [200 OK, 192B, 3ms]
+  ✓  Статус 200 байна
+  ✓  Оюутны шалгалт түрүүлнэ
+
+❏ TC07 — Идэвхгүй оюутан ба байхгүй хичээл
+↳ Setup
+  PUT http://localhost:3000/students/INACT1 [200 OK, 178B, 3ms]
+
+↳ Test
+  POST http://localhost:3000/registrations [200 OK, 198B, 6ms]
+  ✓  Статус 200 байна
+  ✓  Идэвхийн шалгалт түрүүлнэ
+
+❏ TC08 — Урьдач нөхцөлгүй хичээл
+↳ 01 Setup
+  PUT http://localhost:3000/students/TC08_STUDENT [200 OK, 178B, 3ms]
+
+↳ 02 Setup
+  PUT http://localhost:3000/courses/TC08_COURSE [200 OK, 178B, 2ms]
+
+↳ Test
+  POST http://localhost:3000/registrations [201 Created, 202B, 2ms]
+  ✓  Статус 201 байна
+  ✓  Амжилттай бүртгэгдсэн байна
+  ✓  registrationID тоо байна
+
+❏ TC09 — Урьдач нөхцөлийн зарим нь хангагдсан
+↳ 01 Setup
+  PUT http://localhost:3000/students/TC09_STUDENT [200 OK, 178B, 2ms]
+
+↳ 02 Setup
+  PUT http://localhost:3000/courses/TC09_COURSE [200 OK, 178B, 2ms]
+
+↳ Test
+  POST http://localhost:3000/registrations [200 OK, 215B, 2ms]
+  ✓  Статус 200 байна
+  ✓  Урьдач нөхцөлийн алдаа буцна
+  ✓  Зөвхөн CS202 дутуу байна
+
+❏ TC10 — courseID талбар дутуу
+↳ Setup
+  PUT http://localhost:3000/students/TC10_STUDENT [200 OK, 178B, 2ms]
+
+↳ Test
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 2ms]
+  ✓  Статус 400 байна
+  ✓  Хүсэлтийн талбар дутуу байна
+
+❏ TC11 — Буруу JSON формат
+↳ 01 Setup
+  PUT http://localhost:3000/students/TC11_STUDENT [200 OK, 178B, 1ms]
+
+↳ 02 Setup
+  PUT http://localhost:3000/courses/TC11_COURSE [200 OK, 178B, 2ms]
+
+↳ Test
+  POST http://localhost:3000/registrations [400 Bad Request, 199B, 2ms]
+  ✓  Статус 400 байна
+  ✓  Буруу JSON алдаа буцна
+
+❏ TC12 — Default утгууд ашиглах
+↳ 01 Setup
+  PUT http://localhost:3000/students/TC12_STUDENT [200 OK, 178B, 1ms]
+
+↳ 02 Setup
+  PUT http://localhost:3000/courses/TC12_COURSE [200 OK, 178B, 2ms]
+
+↳ Test
+  POST http://localhost:3000/registrations [201 Created, 202B, 2ms]
+  ✓  Статус 201 байна
+  ✓  Амжилттай бүртгэгдсэн байна
+  ✓  registrationID тоо байна
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              30 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              12 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              29 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 546ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 689B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 3ms [min: 1ms, max: 40ms, s.d.: 6ms] │
+└─────────────────────────────────────────────────────────────┘
+exit=0
