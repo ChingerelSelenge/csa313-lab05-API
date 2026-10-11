@@ -1036,6 +1036,42 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "TC13 Нийтийн API",
+      "item": [
+        {
+          "name": "JSONPlaceholder - Users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\npm.test(\"Oracle 1: Статус код 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Oracle 2: Хариу массив эсэх\", function () {\n    const users = pm.response.json();\n    pm.expect(users).to.be.an(\"array\");\n});\n\npm.test(\"Oracle 3: Эхний хэрэглэгчийн нэр зөв эсэх\", function () {\n    const users = pm.response.json();\n    pm.expect(users[0].name).to.eql(\"Leanne Graham\");\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [
