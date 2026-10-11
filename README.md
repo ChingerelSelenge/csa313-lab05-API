@@ -91,10 +91,38 @@ echo "exit=$pass_exit" | tee -a results/newman-pass.txt
 - **Хамгийн их хариу өгөх хугацаа:** 40 ms
 - **Exit code:** `0`
 
-### Дүгнэлт
-
 Newman ашиглан `TC01`–`TC12` хүртэлх 12 тест кейсийг ажиллуулсан. Нийт 30 request болон 29 assertion гүйцэтгэгдэж, алдаа гараагүй (`failed = 0`). Newman-ийн exit code `0` гарсан тул энэхүү ажиллуулалт амжилттай дууссан.
 
 **Нотолгооны файл:** `results/newman-pass.txt`
 
-## Даалгавар 5
+Newman FAIL ажиллуулалт
+
+Үндсэн collection-ийг өөрчлөхгүйгээр хуулбар үүсгэж, TC01 амжилттай бүртгэлийн POST хүсэлтийн статусын oracle-ийг HTTP `201`-ээс HTTP `200` болгон зориуд өөрчилсөн.
+
+**Newman-ийн бодит үр дүн:**
+
+| Үзүүлэлт | Үр дүн |
+|---|---:|
+| Iterations | 1 |
+| Requests | 30 |
+| Test scripts | 12 |
+| Assertions executed | 28 |
+| Assertions passed | 27 |
+| Assertions failed | 1 |
+| Exit code | `1` |
+| Нийт ажилласан хугацаа | 523 ms |
+
+**Илэрсэн алдаа:**
+
+```text
+expected response to have status code 200 but got 201
+```
+
+API амжилттай бүртгэлийн үед HTTP `201 Created` буцаасан. Харин тест HTTP `200` хүлээсэн тул TC01-ийн assertion амжилтгүй болсон.
+
+**Дүгнэлт:** Newman зориуд буруу oracle-ийг илрүүлж, алдаатай тестийн ажиллуулалтад `exit=1` буцаасан. Энэ нь API-ийн алдаа биш, тестийн хүлээлтийг зориуд буруу тохируулсны үр дүн юм.
+
+**Нотолгооны файл:** `results/newman-fail.txt`
+
+**Collection файл:** `lab05-collection-fail.json`
+
